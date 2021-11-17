@@ -70,7 +70,7 @@ class File():
             with open(_pathToFile, "r+") as file:
                 json.dump(_template, file, indent=_indent)
 
-    def load_from_json(_pathToFile:str) -> dict:
+    def load_from_json(self, _pathToFile:str) -> dict:
         """Return data as JSON."""
         with open(_pathToFile, "r+") as file:
             data = json.load(file)
