@@ -67,6 +67,21 @@ class File():
         with open(self.file, "r+") as file:
             data = json.load(file)
         return data
+    
+    def convert_from_csv_to_json(self, _csvFilePath, _jsonFilePath, _primaryColumn):
+        """Convert CSV file to JSON."""
+        data = dict()
+        # Open CSV reader.
+        with open(_csvFilePath, encoding="utf-8") as csvFile:
+            csv = csv.DictReader(csvFile)
+            # Convert each row into a dictionary and add it to json.
+            for row in csv:
+                key = rows[primary_column]
+                data[key] = row
+        # Dumping data to JSON.
+        with open(_jsonFileName, "w", encoding="utf-8") as jsonFile:
+            jsonFile.write(json.dumps(data, indent=4))
+
 
 #    def append_to_list_in_json_file(self, first_key, second_key):
 #        """"""
