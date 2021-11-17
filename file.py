@@ -1,4 +1,5 @@
 import json
+import yaml
 import csv
 import os
 
@@ -46,6 +47,16 @@ class File():
         else:
             return True # file is *.json.
 
+    def is_yaml(self, _pathToFile) -> bool:
+        """Return True if file is *.yaml, otherwise False."""
+        try:
+            with open(_pathToFile, "r+") as file:
+                yaml.load(file)
+        except yaml.YAMLError:
+            return False
+        else:
+            return True
+
     def is_empty(self, _pathToFile) -> bool:
         """Return True if file is empty, False if not, None if file not exist."""
         try:
@@ -60,6 +71,11 @@ class File():
         """Dump data to *.json file."""
         with open(_pathToFile, "r+") as file:
             json.dump(_data, file, indent=_indent)
+
+    def dump_to_yaml(self, _data:dict, _pathToFile:str):
+        """Dump data to *.yaml file."""
+        with open(_pathToFile, "r+") as file:
+            yaml.dump(_data, file)
 
     def dump_template_to_json(self, _pathToFile:str, _template:dict, _indent:int=4):
         """Dump template if file is not empty."""
@@ -76,6 +92,12 @@ class File():
             data = json.load(file)
         return data
 
+    def load_from_yaml(self, _pathToFile:str) -> dict:
+        """Return data as YAML."""
+        with open(_pathToFile, "r+") as file:
+            data = yaml.safe_load(file)
+        return data
+
     def convert_from_csv_to_json(self, _pathToCSV, _pathToJSON, _primaryColumn):
         """Convert CSV file to JSON."""
         data = dict()
@@ -89,6 +111,17 @@ class File():
         # Dumping data to JSON.
         with open(_jsonFileName, "w", encoding="utf-8") as jsonFile:
             jsonFile.write(json.dumps(data, indent=4))
+
+    def return_dict_as_object(self, _dict:dict):
+        """
+        Return dictionary (json, yaml, Python dictionary) as object.
+        YAML and JSON need to be converted to Python dictionary first.
+        """
+        d = _dict
+        class Object():
+            def __init__(self, D):
+                self.__dict__.update(D)
+        return Object(d)
 
 
 #    def append_to_list_in_json_file(self, first_key, second_key):
