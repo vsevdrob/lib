@@ -1,3 +1,8 @@
+"""
+Docs:
+YAML: https://pyyaml.org/wiki/PyYAMLDocumentation
+"""
+
 import json
 import yaml
 import csv
