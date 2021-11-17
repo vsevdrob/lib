@@ -9,7 +9,8 @@ class File():
     ):
         #self.file = FILE_NAME
         # GETing Curent Working Directory.
-        self.PATH = os.getcwd()
+        #self.PATH = os.getcwd()
+        pass
 
     def is_exist(self, _pathToFile) -> bool:
         """Return True if file exists, otherwise False."""
@@ -70,7 +71,7 @@ class File():
                 json.dump(_template, file, indent=_indent)
 
     def load_from_json(_pathToFile:str) -> dict:
-        """"""
+        """Return data as JSON."""
         with open(_pathToFile, "r+") as file:
             data = json.load(file)
         return data
