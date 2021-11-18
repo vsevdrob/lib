@@ -33,7 +33,7 @@ class File():
         try:
             open(_pathToFile, "x")
         except FileExistsError:
-            raise "File already exists!"
+            pass #raise "File already exists!"
 
     def delete(self, _pathToFile):
         """Delete file from computer permanently."""
