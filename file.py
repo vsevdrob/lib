@@ -7,15 +7,13 @@ import json
 import yaml
 import csv
 import os
+from PIL import Image
 
 class File():
     """File object."""
     def __init__(
         self, #FILE_NAME
     ):
-        #self.file = FILE_NAME
-        # GETing Curent Working Directory.
-        #self.PATH = os.getcwd()
         pass
 
     def is_exist(self, _pathToFile) -> bool:
@@ -33,7 +31,7 @@ class File():
         try:
             open(_pathToFile, "x")
         except FileExistsError:
-            pass #raise "File already exists!"
+            raise "File already exists!"
 
     def delete(self, _pathToFile):
         """Delete file from computer permanently."""
@@ -116,6 +114,27 @@ class File():
         # Dumping data to JSON.
         with open(_jsonFileName, "w", encoding="utf-8") as jsonFile:
             jsonFile.write(json.dumps(data, indent=4))
+
+    def remove_exif_data(self, _pathToImage=None, _pathToNewImage=None, _pathToDir=None, _pathToNewImagesAsList=None):
+        """Remove meta-data from image and save it again."""
+        image_file_formats = ["jpeg", "png"]
+        if _pathToImage:
+            f = list(_pathToImage)
+        if _pathToDir:
+            f = os.listdir(_pathToDir)
+            p = _pathToNewFilesAsList
+        for file in f:
+            for image_file_format in image_file_formats:
+                if file.endswith("." + image_file_format):
+                    image = Image.open(file)
+                    data = list(image.getdata())
+                    image_without_exif = Image.new(image.mode, image.size)
+                    image_without_exif.putdata(data)
+                    if _pathToNewFile:
+                        image_without_exif.save(_pathToNewFile)
+                    if _pathToNewFilesAsList:
+                        image_without_exif.save(p.pop(0))
+
 
     def return_dict_as_object(self, _dict:dict):
         """
