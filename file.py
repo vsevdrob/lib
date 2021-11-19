@@ -87,7 +87,7 @@ class File():
                 self.__dict__.update(D)
         return Object(d)
 
-class Json(File):
+class JsonFile(File):
     """JSON object."""
     def __init__(
         self,
@@ -128,7 +128,7 @@ class Json(File):
             data = json.load(file)
         return data
 
-class Yaml(File):
+class YamlFile(File):
     """Yaml object."""
     def __init__(
         self,
@@ -160,7 +160,7 @@ class Yaml(File):
             data = yaml.safe_load(file)
         return data
 
-class Image(File):
+class ImageFile(File):
     """Image object."""
     def __init__(
         self,
@@ -183,9 +183,9 @@ class Image(File):
         for file in f:
             for image_file_format in image_file_formats:
                 if file.endswith("." + image_file_format):
-                    image = PIL().Image.open(file)
+                    image = Image.open(file)
                     data = list(image.getdata())
-                    image_without_exif = PIL.Image().new(image.mode, image.size)
+                    image_without_exif = Image.new(image.mode, image.size)
                     image_without_exif.putdata(data)
                     image_without_exif.save(p.pop(0))
 
