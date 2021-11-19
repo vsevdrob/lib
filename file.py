@@ -176,7 +176,7 @@ class ImageFile(File):
         """
         image_file_formats = ["jpeg", "png"]
         if os.path.isdir(_pathToImage):
-            f = list(os.listdir(_pathToImage))
+            f = sorted(list(os.listdir(_pathToImage)))
         if os.path.isfile(_pathToImage):
             f = list(os.listdir(_pathToImage))
         p = list(_pathToNewImage)
