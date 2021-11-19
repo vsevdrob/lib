@@ -118,7 +118,7 @@ class File():
     def remove_exif_data(self, _pathToImages=None, _pathToNewImages=None):
         """Remove meta-data from image and save it again."""
         image_file_formats = ["jpeg", "png"]
-        f = list(_pathToImages)
+        f = list(os.listdir(_pathToImages))
         p = list(_pathToNewImages)
         for file in f:
             for image_file_format in image_file_formats:
