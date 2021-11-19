@@ -122,7 +122,7 @@ class File():
             f = list(_pathToImage)
         if _pathToDir:
             f = os.listdir(_pathToDir)
-            p = _pathToNewFilesAsList
+            p = _pathToNewImagesAsList
         for file in f:
             for image_file_format in image_file_formats:
                 if file.endswith("." + image_file_format):
