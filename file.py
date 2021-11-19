@@ -130,9 +130,9 @@ class File():
                     data = list(image.getdata())
                     image_without_exif = Image.new(image.mode, image.size)
                     image_without_exif.putdata(data)
-                    if _pathToNewFile:
+                    if _pathToNewImage:
                         image_without_exif.save(_pathToNewFile)
-                    if _pathToNewFilesAsList:
+                    if _pathToNewImagesAsList:
                         image_without_exif.save(p.pop(0))
 
 
