@@ -115,14 +115,11 @@ class File():
         with open(_jsonFileName, "w", encoding="utf-8") as jsonFile:
             jsonFile.write(json.dumps(data, indent=4))
 
-    def remove_exif_data(self, _pathToImage=None, _pathToNewImage=None, _pathToDir=None, _pathToNewImagesAsList=None):
+    def remove_exif_data(self, _pathToImages=None, _pathToNewImages=None):
         """Remove meta-data from image and save it again."""
         image_file_formats = ["jpeg", "png"]
-        if _pathToImage:
-            f = list(_pathToImage)
-        if _pathToDir:
-            f = os.listdir(_pathToDir)
-            p = _pathToNewImagesAsList
+        f = list(_pathToImages)
+        p = list(_pathToNewImages)
         for file in f:
             for image_file_format in image_file_formats:
                 if file.endswith("." + image_file_format):
@@ -130,10 +127,7 @@ class File():
                     data = list(image.getdata())
                     image_without_exif = Image.new(image.mode, image.size)
                     image_without_exif.putdata(data)
-                    if _pathToNewImage:
-                        image_without_exif.save(_pathToNewFile)
-                    if _pathToNewImagesAsList:
-                        image_without_exif.save(p.pop(0))
+                    image_without_exif.save(p.pop(0))
 
 
     def return_dict_as_object(self, _dict:dict):
