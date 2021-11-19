@@ -183,7 +183,7 @@ class Image(File):
         for file in f:
             for image_file_format in image_file_formats:
                 if file.endswith("." + image_file_format):
-                    image = PIL.Image().open(file)
+                    image = PIL().Image.open(file)
                     data = list(image.getdata())
                     image_without_exif = PIL.Image().new(image.mode, image.size)
                     image_without_exif.putdata(data)
