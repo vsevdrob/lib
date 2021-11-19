@@ -7,7 +7,7 @@ import json
 import yaml
 import csv
 import os
-from PIL import Image
+import PIL
 
 class File():
     """File object."""
@@ -183,7 +183,7 @@ class Image(File):
         for file in f:
             for image_file_format in image_file_formats:
                 if file.endswith("." + image_file_format):
-                    image = Image.open(file)
+                    image = PIL.Image.open(file)
                     data = list(image.getdata())
                     image_without_exif = Image.new(image.mode, image.size)
                     image_without_exif.putdata(data)
