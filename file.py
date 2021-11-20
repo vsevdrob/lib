@@ -178,7 +178,7 @@ class ImageFile(File):
         if os.path.isdir(_pathToImage):
             f = sorted(list(os.listdir(_pathToImage)))
         if os.path.isfile(_pathToImage):
-            f = list(os.listdir(_pathToImage))
+            f = list(_pathToImage)
         p = list(_pathToNewImage)
         for file in f:
             for image_file_format in image_file_formats:
