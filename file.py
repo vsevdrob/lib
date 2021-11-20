@@ -105,12 +105,12 @@ class File():
         file_extension = split_tup[1]
         return (file_name, file_extension)
 
-class JsonFile(File):
-    """JSON object."""
-    def __init__(
-        self,
-    ):
-        super().__init__()
+#class JsonFile(File):
+#    """JSON object."""
+#    def __init__(
+#        self,
+#    ):
+#        super().__init__()
 
     def is_json(self, _pathToFile) -> bool:
         """Return True if file ends with .json, otherwise False."""
@@ -146,12 +146,12 @@ class JsonFile(File):
             data = json.load(file)
         return data
 
-class YamlFile(File):
-    """Yaml object."""
-    def __init__(
-        self,
-    ):
-        super().__init__()
+#class YamlFile(File):
+#    """Yaml object."""
+#    def __init__(
+#        self,
+#    ):
+#        super().__init__()
 
     def is_yaml(self, _pathToFile) -> bool:
         """Return True if file ends with .yaml or .yml, otherwise False."""
@@ -178,12 +178,12 @@ class YamlFile(File):
             data = yaml.safe_load(file)
         return data
 
-class ImageFile(File):
-    """Image object."""
-    def __init__(
-        self,
-    ):
-        super().__init__()
+#class ImageFile(File):
+#    """Image object."""
+#    def __init__(
+#        self,
+#    ):
+#        super().__init__()
 
     def remove_exif_metadata(self, _pathToImage=None, _pathToNewImage=None):
         """
