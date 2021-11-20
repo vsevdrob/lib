@@ -7,7 +7,8 @@ import json
 import yaml
 import csv
 import os
-from PIL import Image #as Image_
+import pathlib
+from PIL import Image
 
 class File():
     """File object."""
@@ -86,6 +87,23 @@ class File():
             def __init__(self, D):
                 self.__dict__.update(D)
         return Object(d)
+
+    def return_file_extension(self, _pathToFile):
+        """Return string of file extension. Example: .txt; .py"""
+        return pathlib.Path(_pathToFile).suffix
+
+    def return_file_name(self, _pathToFile):
+        """Return string of file name."""
+        split_tup = os.path.splitext(_pathToFile)
+        file_name = split_tup[0]
+        return file_name
+
+    def return_file_name_and_file_extension(self, _pathToFile):
+        """Return tuple of file name and file extension."""
+        split_tup = os.path.splitext(_pathToFile)
+        file_name = split_tup[0]
+        file_extension = split_tup[1]
+        return (file_name, file_extension)
 
 class JsonFile(File):
     """JSON object."""
