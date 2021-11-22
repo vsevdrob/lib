@@ -77,16 +77,16 @@ class File():
         with open(_jsonFileName, "w", encoding="utf-8") as jsonFile:
             jsonFile.write(json.dumps(data, indent=4))
 
-    def return_dict_as_object(self, _dict:dict):
-        """
-        Return dictionary (json, yaml, Python dictionary) as object.
-        YAML and JSON need to be converted to Python dictionary first.
-        """
-        d = _dict
-        class Object():
-            def __init__(self, D):
-                self.__dict__.update(D)
-        return Object(d)
+#    def return_dict_as_object(self, _dict:dict):
+#        """
+#        Return dictionary (json, yaml, Python dictionary) as object.
+#        YAML and JSON need to be converted to Python dictionary first.
+#        """
+#        d = _dict
+#        class Object():
+#            def __init__(self, D):
+#                self.__dict__.update(D)
+#        return Object(d)
 
     def return_file_extension(self, _pathToFile):
         """Return string of file extension. Example: .txt; .py"""
