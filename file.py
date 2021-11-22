@@ -3,6 +3,7 @@ Docs:
 YAML: https://pyyaml.org/wiki/PyYAMLDocumentation
 """
 
+import ast
 import json
 import yaml
 import csv
@@ -44,20 +45,51 @@ class File():
         except FileExistsError:
             raise "File already exists!"
 
+    def read(self, _pathToFile):
+        """
+        Read file and return data as string representation.
+        For literal evaluation use eval_literal() method.
+        """
+        with open(_pathToFile, "r", encoding="utf-8") as file:
+            data = file.read()
+        return data
+
+    def eval_literal(self, _pathToFile):
+        """
+        Return safely literal evaluated data from file.
+        Returns error if data is incomparable with data structure of Python.
+        Instead use read() method to return data as string.
+        """
+        try:
+            with open(_pathToFile, "r", encoding="utf-8") as file:
+                data = ast.literal_eval(file.read()); file.close()
+            return data
+        except FileNotFoundError:
+            return None
+
     def rename(self, _pathToFile:str, _pathToNewFile:str):
         """Rename file."""
         os.rename(_pathToFile, _pathToNewFile)
 
-    def delete(self, _pathToFile):
+    def delete(self, _pathToFile:str):
         """Delete file from computer permanently."""
         if os.path.exists(_pathToFile):
             os.remove(_pathToFile)
         else:
             raise "File does not exist!"
 
-    def insert(self, _data, _pathToFile):
-        """Insert data to file."""
-        pass
+    def append(self, _data, _pathToFile:str):
+        """Append data to file."""
+        with open(_pathToFile, "a", encoding="utf-8") as file:
+            file.write(_data); file.close()
+
+    def write(self, _data, _pathToFile:str):
+        """
+        Write data to file.
+        Attention: overwrites whole file. Instead use append() method.
+        """
+        with open(_pathToFile, "w", encoding="utf-8") as file:
+            file.write(_data); file.close()
 
     def edit(self, _pathToFile):
         """Edit file."""
