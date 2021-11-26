@@ -14,18 +14,18 @@ from PIL import Image
 class File():
     """File object."""
     def __init__(
-        self, #FILE_NAME
+        self,
     ):
         pass
 
-    def is_exist(self, _pathToFile) -> bool:
+    def is_exist(_pathToFile) -> bool:
         """Return True if file exists, otherwise False."""
         if os.path.exists(_pathToFile): #in os.listdir(self.PATH):
             return True # file exists.
         else:
             return False # file does not exist.
 
-    def is_empty(self, _pathToFile) -> bool:
+    def is_empty(_pathToFile) -> bool:
         """Return True if file is empty, False if not, None if file not exist."""
         try:
             if os.path.isfile(_pathToFile) and os.path.getsize(_pathToFile) == 0:
@@ -35,7 +35,7 @@ class File():
         if os.path.isfile(_pathToFile) and os.path.getsize(_pathToFile) > 0:
             return False # file is not empty.
 
-    def create(self, _pathToFile):
+    def create(_pathToFile):
         """
         If file does not exist - create it, otherwise return an Error.
         A string argument should not contain ~ or $HOME due to error.
@@ -45,7 +45,7 @@ class File():
         except FileExistsError:
             raise "File already exists!"
 
-    def read(self, _pathToFile):
+    def read(_pathToFile):
         """
         Read file and return data as string representation.
         For literal evaluation use eval_literal() method.
@@ -54,7 +54,7 @@ class File():
             data = file.read()
         return data
 
-    def eval_literal(self, _pathToFile):
+    def eval_literal(_pathToFile):
         """
         Return safely literal evaluated data from file.
         Returns error if data is incomparable with data structure of Python.
@@ -67,35 +67,35 @@ class File():
         except FileNotFoundError:
             return None
 
-    def rename(self, _pathToFile:str, _pathToNewFile:str):
+    def rename(_pathToFile:str, _pathToNewFile:str):
         """Rename file."""
         os.rename(_pathToFile, _pathToNewFile)
 
-    def delete(self, _pathToFile:str):
+    def delete(_pathToFile:str):
         """Delete file from computer permanently."""
         if os.path.exists(_pathToFile):
             os.remove(_pathToFile)
         else:
             raise "File does not exist!"
 
-    def append(self, _data, _pathToFile:str):
+    def append(self, _data: str, _pathToFile:str):
         """Append data to file."""
         with open(_pathToFile, "a", encoding="utf-8") as file:
-            file.write(_data); file.close()
+            file.write(_data + "\n"); file.close()
 
-    def write(self, _data, _pathToFile:str):
+    def write(self, _data: str, _pathToFile: str):
         """
         Write data to file.
         Attention: overwrites whole file. Instead use append() method.
         """
         with open(_pathToFile, "w", encoding="utf-8") as file:
-            file.write(_data); file.close()
+            file.write(_data + "\n"); file.close()
 
-    def edit(self, _pathToFile):
+    def edit(_pathToFile):
         """Edit file."""
         pass
 
-    def convert_from_csv_to_json(self, _pathToCSV, _pathToJSON, _primaryColumn):
+    def convert_from_csv_to_json(_pathToCSV, _pathToJSON, _primaryColumn):
         """Convert CSV file to JSON."""
         data = dict()
         # Open CSV reader.
@@ -109,28 +109,28 @@ class File():
         with open(_jsonFileName, "w", encoding="utf-8") as jsonFile:
             jsonFile.write(json.dumps(data, indent=4))
 
-#    def return_dict_as_object(self, _dict:dict):
+#    def return_dict_as_object(_dict:dict):
 #        """
 #        Return dictionary (json, yaml, Python dictionary) as object.
 #        YAML and JSON need to be converted to Python dictionary first.
 #        """
 #        d = _dict
 #        class Object():
-#            def __init__(self, D):
+#            def __init__(D):
 #                self.__dict__.update(D)
 #        return Object(d)
 
-    def return_file_extension(self, _pathToFile):
+    def return_file_extension(_pathToFile):
         """Return string of file extension. Example: .txt; .py"""
         return pathlib.Path(_pathToFile).suffix
 
-    def return_file_name(self, _pathToFile):
+    def return_file_name(_pathToFile):
         """Return string of file name."""
         split_tup = os.path.splitext(_pathToFile)
         file_name = split_tup[0]
         return file_name
 
-    def return_file_name_and_file_extension(self, _pathToFile):
+    def return_file_name_and_file_extension(_pathToFile):
         """Return tuple of file name and file extension."""
         split_tup = os.path.splitext(_pathToFile)
         file_name = split_tup[0]
@@ -144,7 +144,7 @@ class File():
 #    ):
 #        super().__init__()
 
-    def is_json(self, _pathToFile) -> bool:
+    def is_json(_pathToFile) -> bool:
         """Return True if file ends with .json, otherwise False."""
         if _pathToFile.endswith(".json"):
             return True
@@ -158,12 +158,12 @@ class File():
 #        else:
 #            return True # file is *.json.
 
-    def dump_to_json(self, _data:dict, _pathToFile:str, _indent:int=4):
+    def dump_to_json(_data:dict, _pathToFile:str, _indent:int=4):
         """Dump data to *.json file."""
         with open(_pathToFile, "r+") as file:
             json.dump(_data, file, indent=_indent)
 
-    def dump_template_to_json(self, _pathToFile:str, _template:dict, _indent:int=4):
+    def dump_template_to_json(_pathToFile:str, _template:dict, _indent:int=4):
         """Dump template if file is not empty."""
         if is_empty(_pathToFile) == False:
             pass # file is not empty.
@@ -172,7 +172,7 @@ class File():
             with open(_pathToFile, "r+") as file:
                 json.dump(_template, file, indent=_indent)
 
-    def load_from_json(self, _pathToFile:str) -> dict:
+    def load_from_json(_pathToFile:str) -> dict:
         """Return data as JSON."""
         with open(_pathToFile, "r+") as file:
             data = json.load(file)
@@ -185,7 +185,7 @@ class File():
 #    ):
 #        super().__init__()
 
-    def is_yaml(self, _pathToFile) -> bool:
+    def is_yaml(_pathToFile) -> bool:
         """Return True if file ends with .yaml or .yml, otherwise False."""
         if _pathToFile.endswith(".yaml") or _pathToFile.endswith(".yml"):
             return True
@@ -199,16 +199,49 @@ class File():
         #else:
         #    return True
 
-    def dump_to_yaml(self, _data:dict, _pathToFile:str):
+    def dump_to_yaml(_data:dict, _pathToFile:str):
         """Dump data to *.yaml file."""
         with open(_pathToFile, "r+") as file:
             yaml.dump(_data, file)
 
-    def load_from_yaml(self, _pathToFile:str) -> dict:
+    def load_from_yaml(_pathToFile:str) -> dict:
         """Return data as YAML."""
         with open(_pathToFile, "r+") as file:
             data = yaml.safe_load(file)
         return data
+
+#class CsvFile(File):
+#    """Csv object."""
+#    def __init__(
+#        self,
+#    ):
+#        super().__init__()
+
+    def read_from_csv(_pathToFile:str):
+        """Read csv file and return field names and data rows."""
+        fieldNames, dataRows = [], []
+        with open(_pathToFile, "r", encoding="utf-8") as file:
+            # Create a csv reader object.
+            csvReader = csv.reader(file)
+            # Extract field names through first row.
+            fieldNames = next(csvReader)
+            # Extract each data row one by one.
+            for row in csvReader:
+                dataRows.append(row)
+        return (fieldNames, dataRows)
+
+    def return_field_names():
+        pass
+
+    def write_to_csv(_fieldNames:list, _dataRows:list, _pathToFile:str):
+        """Write data to csv file."""
+        with open(_pathToFile, "w") as file:
+            # Create csv writer object.
+            csvWriter = csv.writer(file)
+            # Write fields.
+            csvWriter.writerow(_fieldNames)
+            # Write data rows.
+            csvWriter.writerows(_dataRows)
 
 #class ImageFile(File):
 #    """Image object."""
@@ -217,7 +250,7 @@ class File():
 #    ):
 #        super().__init__()
 
-    def remove_exif_metadata(self, _pathToImage=None, _pathToNewImage=None):
+    def remove_exif_metadata(_pathToImage=None, _pathToNewImage=None):
         """
         Remove meta-data from image and save it to new image.
 
@@ -248,3 +281,7 @@ class File():
 #            data[first_key].append(second_key[first_key][0])
 #            file.seek(0)
 #            json.dump(data, file, indent=4)
+
+file = File()
+file.write("123", "test.md")
+file.append("456", "test.md")
