@@ -1,3 +1,3 @@
 # lib
 
-Customed Python modules for reuse.
+Customed Python and C++ libraries for reuse.
