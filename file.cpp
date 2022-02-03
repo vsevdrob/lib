@@ -1,19 +1,31 @@
-// Used to interact with filesystem
-#include <filesystem>
-// Used to read and write from/to console
-#include <iostream>
-// Used to read and write from/to files
-#include <fstream>
-#include <string>
+//
+// Include necessary libraries
+//
+
+#include <filesystem>       // Used to interact with filesystem
+#include <iostream>         // Used to read and write from/to console
+#include <fstream>          // Used to read and write from/to files
+#include <string>           // Used to work with string data type
+
+//
+// Assigning std libraries
+//
+
+// #include <iostream>
+using std::cout; using std::endl;
+// #include <fstream>
+using std::fstream;
+// #include <string>
+using std::string;
 
 class File {
     public:
-        bool exists(std::string _pathToFile) {
+        bool exists(string _pathToFile) {
             return std::__fs::filesystem::exists(_pathToFile); // or use std::filesystem::exists
         }
         
-        // Return true if file is empty, false if not, NULL if file not exist.
-        bool is_empty(std::string _pathToFile) {
+        // Return true if file is empty, false if not, false (should be NULL) if file not exist.
+        bool is_empty(string _pathToFile) {
             if (std::__fs::filesystem::exists(_pathToFile))
                 return std::__fs::filesystem::is_empty(_pathToFile);
             else
@@ -22,9 +34,9 @@ class File {
         }
 
         // If file does not exist - create it, otherwise 
-        void create(std::string _pathToFile) {
+        void create(string _pathToFile) {
             if (exists(_pathToFile)) {
-                std::cout << "File exists!" << std::endl;        
+                cout << "File exists!" << endl;        
             } else {
                 std::ofstream MyFile(_pathToFile);
                 MyFile.close();
@@ -32,8 +44,8 @@ class File {
         }
 
         // Write data to file.
-        void write(std::string _data, std::string _pathToFile) {
-            std::fstream file;
+        void write(string _data, string _pathToFile) {
+            fstream file;
             file.open(_pathToFile, std::ios::out); // output (write) mode
             if (file.is_open()) {
                 file << _data << "\n"; 
@@ -42,8 +54,8 @@ class File {
         }
 
         // Append data to file.
-        void append(std::string _data, std::string _pathToFile) {
-            std::fstream file;
+        void append(string _data, string _pathToFile) {
+            fstream file;
             file.open(_pathToFile, std::ios::app); // append mode
             if (file.is_open()) {
                 file << _data << "\n";
@@ -51,12 +63,12 @@ class File {
             }
         }
 
-        std::string read(std::string _pathToFile) {
-            std::fstream file;
-            std::string data;
+        string read(string _pathToFile) {
+            fstream file;
+            string data;
             file.open(_pathToFile, std::ios::in); // input (read) mode
             if (file.is_open()) {
-                std::string line;
+                string line;
                 // Pull each line of text from file.
                 while (getline(file, line)) {
                     data.append(line + "\n");

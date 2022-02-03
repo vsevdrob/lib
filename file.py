@@ -271,17 +271,3 @@ class File():
                     image_without_exif = Image.new(image.mode, image.size)
                     image_without_exif.putdata(data)
                     image_without_exif.save(p.pop(0))
-
-
-
-#    def append_to_list_in_json_file(self, first_key, second_key):
-#        """"""
-#        with open(self.file, "r+") as file:
-#            data = json.load(file)
-#            data[first_key].append(second_key[first_key][0])
-#            file.seek(0)
-#            json.dump(data, file, indent=4)
-
-file = File()
-file.write("123", "test.md")
-file.append("456", "test.md")
