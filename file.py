@@ -18,14 +18,14 @@ class File():
     ):
         pass
 
-    def is_exist(_pathToFile) -> bool:
+    def is_exist(self, _pathToFile) -> bool:
         """Return True if file exists, otherwise False."""
         if os.path.exists(_pathToFile): #in os.listdir(self.PATH):
             return True # file exists.
         else:
             return False # file does not exist.
 
-    def is_empty(_pathToFile) -> bool:
+    def is_empty(self, _pathToFile) -> bool:
         """Return True if file is empty, False if not, None if file not exist."""
         try:
             if os.path.isfile(_pathToFile) and os.path.getsize(_pathToFile) == 0:
@@ -35,7 +35,7 @@ class File():
         if os.path.isfile(_pathToFile) and os.path.getsize(_pathToFile) > 0:
             return False # file is not empty.
 
-    def create(_pathToFile):
+    def create(self, _pathToFile):
         """
         If file does not exist - create it, otherwise return an Error.
         A string argument should not contain ~ or $HOME due to error.
@@ -45,7 +45,7 @@ class File():
         except FileExistsError:
             raise "File already exists!"
 
-    def read(_pathToFile):
+    def read(self, _pathToFile):
         """
         Read file and return data as string representation.
         For literal evaluation use eval_literal() method.
@@ -54,24 +54,24 @@ class File():
             data = file.read()
         return data
 
-    def eval_literal(_pathToFile):
+    def eval_literal(self, _pathToFile):
         """
         Return safely literal evaluated data from file.
         Returns error if data is incomparable with data structure of Python.
         Instead use read() method to return data as string.
         """
         try:
-            with open(_pathToFile, "r", encoding="utf-8") as file:
+            with open(self, _pathToFile, "r", encoding="utf-8") as file:
                 data = ast.literal_eval(file.read()); file.close()
             return data
         except FileNotFoundError:
             return None
 
-    def rename(_pathToFile:str, _pathToNewFile:str):
+    def rename(self, _pathToFile:str, _pathToNewFile:str):
         """Rename file."""
         os.rename(_pathToFile, _pathToNewFile)
 
-    def delete(_pathToFile:str):
+    def delete(self, _pathToFile:str):
         """Delete file from computer permanently."""
         if os.path.exists(_pathToFile):
             os.remove(_pathToFile)
@@ -91,11 +91,11 @@ class File():
         with open(_pathToFile, "w", encoding="utf-8") as file:
             file.write(_data + "\n"); file.close()
 
-    def edit(_pathToFile):
+    def edit(self, _pathToFile):
         """Edit file."""
         pass
 
-    def convert_from_csv_to_json(_pathToCSV, _pathToJSON, _primaryColumn):
+    def convert_from_csv_to_json(self, _pathToCSV, _pathToJSON, _primaryColumn):
         """Convert CSV file to JSON."""
         data = dict()
         # Open CSV reader.
@@ -120,17 +120,17 @@ class File():
 #                self.__dict__.update(D)
 #        return Object(d)
 
-    def return_file_extension(_pathToFile):
+    def return_file_extension(self, _pathToFile):
         """Return string of file extension. Example: .txt; .py"""
         return pathlib.Path(_pathToFile).suffix
 
-    def return_file_name(_pathToFile):
+    def return_file_name(self, _pathToFile):
         """Return string of file name."""
         split_tup = os.path.splitext(_pathToFile)
         file_name = split_tup[0]
         return file_name
 
-    def return_file_name_and_file_extension(_pathToFile):
+    def return_file_name_and_file_extension(self, _pathToFile):
         """Return tuple of file name and file extension."""
         split_tup = os.path.splitext(_pathToFile)
         file_name = split_tup[0]
@@ -144,7 +144,7 @@ class File():
 #    ):
 #        super().__init__()
 
-    def is_json(_pathToFile) -> bool:
+    def is_json(self, _pathToFile) -> bool:
         """Return True if file ends with .json, otherwise False."""
         if _pathToFile.endswith(".json"):
             return True
@@ -158,12 +158,12 @@ class File():
 #        else:
 #            return True # file is *.json.
 
-    def dump_to_json(_data:dict, _pathToFile:str, _indent:int=4):
+    def dump_to_json(self, _data:dict, _pathToFile:str, _indent:int=4):
         """Dump data to *.json file."""
         with open(_pathToFile, "r+") as file:
             json.dump(_data, file, indent=_indent)
 
-    def dump_template_to_json(_pathToFile:str, _template:dict, _indent:int=4):
+    def dump_template_to_json(self, _pathToFile:str, _template:dict, _indent:int=4):
         """Dump template if file is not empty."""
         if is_empty(_pathToFile) == False:
             pass # file is not empty.
@@ -172,7 +172,7 @@ class File():
             with open(_pathToFile, "r+") as file:
                 json.dump(_template, file, indent=_indent)
 
-    def load_from_json(_pathToFile:str) -> dict:
+    def load_from_json(self, _pathToFile:str) -> dict:
         """Return data as JSON."""
         with open(_pathToFile, "r+") as file:
             data = json.load(file)
@@ -185,7 +185,7 @@ class File():
 #    ):
 #        super().__init__()
 
-    def is_yaml(_pathToFile) -> bool:
+    def is_yaml(self, _pathToFile) -> bool:
         """Return True if file ends with .yaml or .yml, otherwise False."""
         if _pathToFile.endswith(".yaml") or _pathToFile.endswith(".yml"):
             return True
@@ -199,12 +199,12 @@ class File():
         #else:
         #    return True
 
-    def dump_to_yaml(_data:dict, _pathToFile:str):
+    def dump_to_yaml(self, _data:dict, _pathToFile:str):
         """Dump data to *.yaml file."""
         with open(_pathToFile, "r+") as file:
             yaml.dump(_data, file)
 
-    def load_from_yaml(_pathToFile:str) -> dict:
+    def load_from_yaml(self, _pathToFile:str) -> dict:
         """Return data as YAML."""
         with open(_pathToFile, "r+") as file:
             data = yaml.safe_load(file)
@@ -217,7 +217,7 @@ class File():
 #    ):
 #        super().__init__()
 
-    def read_from_csv(_pathToFile:str):
+    def read_from_csv(self, _pathToFile:str):
         """Read csv file and return field names and data rows."""
         fieldNames, dataRows = [], []
         with open(_pathToFile, "r", encoding="utf-8") as file:
@@ -233,7 +233,7 @@ class File():
     def return_field_names():
         pass
 
-    def write_to_csv(_fieldNames:list, _dataRows:list, _pathToFile:str):
+    def write_to_csv(self, _fieldNames:list, _dataRows:list, _pathToFile:str):
         """Write data to csv file."""
         with open(_pathToFile, "w") as file:
             # Create csv writer object.
@@ -250,7 +250,7 @@ class File():
 #    ):
 #        super().__init__()
 
-    def remove_exif_metadata(_pathToImage=None, _pathToNewImage=None):
+    def remove_exif_metadata(self, _pathToImage=None, _pathToNewImage=None):
         """
         Remove meta-data from image and save it to new image.
 
