@@ -6,7 +6,6 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"strings"
 )
 
 func GetInfo(_path string) (fs.FileInfo, error) {
@@ -76,6 +75,21 @@ func ReadByte(_path string) []byte {
 	return content
 }
 
+/*
+   @param _path Path to file incl. file extension (ex: "./test.py")
+   @param _data Data to write (ex: []byte("print('Hello World')"))
+   @param _perm Unix file permission bits (ex: 0755)
+*/
+func Write(_path string, _data []byte, _perm uint32) {
+	unixFilePermissionBits := fs.FileMode(_perm)
+
+	err := ioutil.WriteFile(_path, _data, unixFilePermissionBits)
+
+	if err != nil {
+		log.Fatalln("Error!", err.Error())
+	}
+}
+
 func Rename(_oldPath string, _newPath string) {
 	oldName := GetName(_oldPath)
 	err := os.Rename(_oldPath, _newPath)
@@ -101,15 +115,4 @@ func Remove(_path string) {
 
 func GetExtension(_path string) string {
 	return filepath.Ext(_path)
-}
-
-func IsJSON(_path string) bool {
-	isJson := strings.HasSuffix(_path, ".json")
-	jsonExt := GetExtension(_path)
-
-	if isJson == true && jsonExt == ".json" {
-		return true
-	} else {
-		return false
-	}
 }
