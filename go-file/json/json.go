@@ -3,7 +3,6 @@ package json
 import (
 	"encoding/json"
 	"go-file/file"
-	"go-file/model"
 	"log"
 	"strings"
 )
@@ -19,22 +18,54 @@ func IsJSON(_path string) bool {
 	}
 }
 
-func LoadStruct(_path string) (s model.JsonStruct) {
-	content := file.ReadByte(_path)
+func LoadStruct(_path string, _struct interface{}) (interface{}, error) {
+	content, err := file.ReadByte(_path)
+	result := _struct
 
-	if err := json.Unmarshal(content, &s); err != nil {
-		log.Fatalln("Error!", err.Error())
+	if err != nil {
+		log.Println("Error!", err.Error())
 	}
 
-	return
+	err = json.Unmarshal(content, &result)
+
+	if err != nil {
+		log.Println("Error!", err.Error())
+		return nil, err
+	}
+
+	return result, err
 }
 
-func LoadUnstruct(_path string) (result map[string]interface{}) {
-	content := file.ReadByte(_path)
+func LoadUnstruct(_path string) (map[string]interface{}, error) {
+	content, err := file.ReadByte(_path)
+	var result map[string]interface{}
 
-	if err := json.Unmarshal(content, &result); err != nil {
-		log.Fatalln("Error!", err.Error())
+	if err != nil {
+		log.Println("Error!", err.Error())
 	}
 
-	return
+	err = json.Unmarshal(content, &result)
+
+	if err != nil {
+		log.Println("Error!", err.Error())
+	}
+
+	return result, err
+}
+
+func Dump(_path string, _data interface{}) error {
+	res, err := json.Marshal(_data)
+
+	if err != nil {
+		log.Println("Error!", err.Error())
+		return err
+	}
+
+	if err := file.Write(_path, res, 0644); err != nil {
+		log.Println("Error!", err.Error())
+		return err
+	}
+
+	return err
+
 }
